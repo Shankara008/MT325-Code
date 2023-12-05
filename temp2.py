@@ -4,11 +4,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# initialize the camera
+# If you have multiple camera connected with
+# current device, assign a value in cam_port
+# variable according to that
 
+cam = cv2.VideoCapture(0)
+
+# reading the input using the camera
+result, image_1 = cam.read()
+
+# If image will detected without any error
 # Load the image 
 image = cv2.imread('Fabric/dots7.jpg', cv2.IMREAD_GRAYSCALE)
-
-image_1 = image.copy()
 
 # Apply Gaussian blur for noise reduction
 image_blurred = cv2.GaussianBlur(image, (5,5),0)
