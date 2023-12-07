@@ -4,49 +4,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# initialize the camera
-# If you have multiple camera connected with
-# current device, assign a value in cam_port
-# variable according to that
-
-cam = cv2.VideoCapture(0)
-
-# reading the input using the camera
-result, image_1 = cam.read()
-
-cam.release()
-def take_photo():
-    cap = cv2.VideoCapture(3)
-    ret, frame = cap.read()
-    cv2.imwrite('webcamphoto.jpg', frame)
-    cap.release()
-take_photo()
-
-# Connect to webcam
-cap = cv2.VideoCapture(3)
-# Loop through every frame until we close our webcam
-while cap.isOpened():
-    ret, frame = cap.read()
-
-    # Show image
-    cv2.imshow('Webcam', frame)
-
-    # Checks whether q has been hit and stops the loop
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-# Releases the webcam
-cap.release()
-# Closes the frame
-cv2.destroyAllWindows()
-
-# If image will detected without any error
 # Load the image 
 image = cv2.imread('Fabric/dots7.jpg', cv2.IMREAD_GRAYSCALE)
+image_1 = image.copy()
 
 # Apply Gaussian blur for noise reduction
 image_blurred = cv2.GaussianBlur(image, (5,5),0)
-
 
 # Define the lower and upper bounds for the intensity range
 lower_bound = 0  # Adjust this value for your specific intensity range
