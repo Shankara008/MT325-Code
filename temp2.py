@@ -14,6 +14,32 @@ cam = cv2.VideoCapture(0)
 # reading the input using the camera
 result, image_1 = cam.read()
 
+cam.release()
+def take_photo():
+    cap = cv2.VideoCapture(3)
+    ret, frame = cap.read()
+    cv2.imwrite('webcamphoto.jpg', frame)
+    cap.release()
+take_photo()
+
+# Connect to webcam
+cap = cv2.VideoCapture(3)
+# Loop through every frame until we close our webcam
+while cap.isOpened():
+    ret, frame = cap.read()
+
+    # Show image
+    cv2.imshow('Webcam', frame)
+
+    # Checks whether q has been hit and stops the loop
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Releases the webcam
+cap.release()
+# Closes the frame
+cv2.destroyAllWindows()
+
 # If image will detected without any error
 # Load the image 
 image = cv2.imread('Fabric/dots7.jpg', cv2.IMREAD_GRAYSCALE)
