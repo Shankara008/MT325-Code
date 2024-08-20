@@ -1,0 +1,120 @@
+---
+title: "algorithm"
+author: "S/18/844"
+date: "2023-12-06"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+library(tinytex)
+library(ggplot2)
+```
+
+
+```{r}
+data1 <- read_csv("../Data/before washing.csv")
+data2 <- read_csv("../Data/after washing.csv")
+
+data <- merge(data1, data2, all = TRUE)
+
+
+width <- data[c(5,12,18),]
+
+d1 <- mean(width$`Before Distance`)
+d2 <- mean(width$`After Distance`)
+
+width_percentage_len <- abs(d1-d2)*100/d1
+width_percentage <- round(width_percentage_len, digits=4)
+sprintf("width_percentage: %s", width_percentage)
+
+
+length <- data[c(2,19,27),]
+
+d3 <- mean(length$`Before Distance`)
+d4 <- mean(length$`After Distance`)
+
+length_percentage_len <- abs(d3-d4)*100/d3
+length_percentage <- round(length_percentage_len, digits=4)
+sprintf("length_percentage: %s", length_percentage)
+
+area <- data[c(29),]
+
+area_percentage_len <- abs(area$`Before Distance`-area$`After Distance`)*100/area$`Before Distance`
+area_percentage <- round(area_percentage_len, digits=5)
+sprintf("area_percentage: %s", area_percentage)
+
+rol_no <- 1
+  
+rol_1 <- data.frame(rol_no,width_percentage,length_percentage,area_percentage)
+view(rol_1)
+
+```
+
+```{r}
+library(xlsx)
+library(readxl)
+```
+
+```{r}
+sheet_names <- excel_sheets("../Data/after washing.xlsx")           # Get sheet names
+sheet_names                                            # Print sheet names
+
+list_all <- lapply(sheet_names, function(x) {          # Read all sheets to list
+  as.data.frame(read_excel("../Data/after washing.xlsx", sheet = x)) } )
+
+names(list_all) <- sheet_names                         # Rename list elements
+
+head(list_all$Roll1)      
+```
+
+
+
+```{r}
+sheet_names <- excel_sheets("../Data/before washing.xlsx")           # Get sheet names
+sheet_names                                            # Print sheet names
+
+list_all <- lapply(sheet_names, function(x) {          # Read all sheets to list
+  as.data.frame(read_excel("../Data/before washing.xlsx", sheet = x)) } )
+
+names(list_all) <- sheet_names                         # Rename list elements
+
+head(list_all$Roll1)   
+```
+
+
+```{r}
+# Function to read "Roll" sheet from a file
+read_roll_sheet <- function("../Data/after washing.xlsx") {
+  roll_sheet <- read_excel("../Data/after washing.xlsx", sheet = "Roll")
+  return(roll_sheet)
+}
+
+# Read "Roll" sheet from "after washing.xlsx"
+after_washing_roll <- read_roll_sheet("../Data/after washing.xlsx")
+
+# Display the first few rows of the "Roll" sheet
+cat("After Washing Roll Sheet:\n")
+print(head(after_washing_roll))
+
+# Read "Roll" sheet from "before washing.xlsx"
+before_washing_roll <- read_roll_sheet("../Data/before washing.xlsx")
+
+# Display the first few rows of the "Roll" sheet
+cat("\nBefore Washing Roll Sheet:\n")
+print(head(before_washing_roll))
+
+
+
+```
+
+
+
+
